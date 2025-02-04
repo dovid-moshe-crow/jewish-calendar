@@ -82,12 +82,6 @@ export function isValidHebrewDate(
 export function getMonthLength(year: number, month: number): number {
   // Regular pattern of month lengths
   const regularMonths: Record<number, number> = {
-    [HEBREW_MONTHS.NISAN]: 30,
-    [HEBREW_MONTHS.IYAR]: 29,
-    [HEBREW_MONTHS.SIVAN]: 30,
-    [HEBREW_MONTHS.TAMMUZ]: 29,
-    [HEBREW_MONTHS.AV]: 30,
-    [HEBREW_MONTHS.ELUL]: 29,
     [HEBREW_MONTHS.TISHREI]: 30,
     [HEBREW_MONTHS.CHESHVAN]: 29, // Can be 30 in a complete year
     [HEBREW_MONTHS.KISLEV]: 30, // Can be 29 in a deficient year
@@ -95,10 +89,16 @@ export function getMonthLength(year: number, month: number): number {
     [HEBREW_MONTHS.SHEVAT]: 30,
     [HEBREW_MONTHS.ADAR_I]: 30, // Only in leap years
     [HEBREW_MONTHS.ADAR_II]: 29, // Regular Adar in non-leap years
+    [HEBREW_MONTHS.NISAN]: 30,
+    [HEBREW_MONTHS.IYAR]: 29,
+    [HEBREW_MONTHS.SIVAN]: 30,
+    [HEBREW_MONTHS.TAMMUZ]: 29,
+    [HEBREW_MONTHS.AV]: 30,
+    [HEBREW_MONTHS.ELUL]: 29,
   };
 
   // TODO: Implement variable month length for Cheshvan and Kislev based on year type
-  return regularMonths[month] || 30;
+  return regularMonths[month];
 }
 
 /**
@@ -169,29 +169,23 @@ export function getMonthName(
 }
 
 export const HEBREW_MONTHS = {
-  NISAN: 1,
-  IYAR: 2,
-  SIVAN: 3,
-  TAMMUZ: 4,
-  AV: 5,
-  ELUL: 6,
-  TISHREI: 7,
-  CHESHVAN: 8,
-  KISLEV: 9,
-  TEVET: 10,
-  SHEVAT: 11,
-  ADAR_I: 12, // Adar Aleph in leap years
-  ADAR_II: 13, // Adar Bet in leap years (regular Adar in non-leap years)
+  TISHREI: 1,
+  CHESHVAN: 2,
+  KISLEV: 3,
+  TEVET: 4,
+  SHEVAT: 5,
+  ADAR_I: 6,
+  ADAR_II: 7,
+  NISAN: 8,
+  IYAR: 9,
+  SIVAN: 10,
+  TAMMUZ: 11,
+  AV: 12,
+  ELUL: 13,
 } as const;
 
 export const HEBREW_MONTH_NAMES = {
   en: [
-    'Nisan',
-    'Iyar',
-    'Sivan',
-    'Tammuz',
-    'Av',
-    'Elul',
     'Tishrei',
     'Cheshvan',
     'Kislev',
@@ -199,14 +193,14 @@ export const HEBREW_MONTH_NAMES = {
     'Shevat',
     'Adar I',
     'Adar II',
+    'Nisan',
+    'Iyar',
+    'Sivan',
+    'Tammuz',
+    'Av',
+    'Elul',
   ],
   he: [
-    'ניסן',
-    'אייר',
-    'סיון',
-    'תמוז',
-    'אב',
-    'אלול',
     'תשרי',
     'חשון',
     'כסלו',
@@ -214,5 +208,11 @@ export const HEBREW_MONTH_NAMES = {
     'שבט',
     'אדר א',
     'אדר ב',
+    'ניסן',
+    'אייר',
+    'סיון',
+    'תמוז',
+    'אב',
+    'אלול',
   ],
 };
