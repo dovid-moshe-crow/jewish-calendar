@@ -83,15 +83,15 @@ Contributions are welcome! Please feel free to submit a Pull Request. Make sure 
 
 MIT © Dovid
 
-[build-img]:https://github.com/dovidmoishe/jewish-calendar/actions/workflows/release.yml/badge.svg
-[build-url]:https://github.com/dovidmoishe/jewish-calendar/actions/workflows/release.yml
+[build-img]:https://github.com/dovid-moshe-crow/jewish-calendar/actions/workflows/release.yml/badge.svg
+[build-url]:https://github.com/dovid-moshe-crow/jewish-calendar/actions/workflows/release.yml
 [downloads-img]:https://img.shields.io/npm/dt/jewish-calendar
 [downloads-url]:https://www.npmtrends.com/jewish-calendar
 [npm-img]:https://img.shields.io/npm/v/jewish-calendar
 [npm-url]:https://www.npmjs.com/package/jewish-calendar
-[issues-img]:https://img.shields.io/github/issues/dovidmoishe/jewish-calendar
-[issues-url]:https://github.com/dovidmoishe/jewish-calendar/issues
-[codecov-img]:https://codecov.io/gh/dovidmoishe/jewish-calendar/branch/main/graph/badge.svg
-[codecov-url]:https://codecov.io/gh/dovidmoishe/jewish-calendar
+[issues-img]:https://img.shields.io/github/issues/dovid-moshe-crow/jewish-calendar
+[issues-url]:https://github.com/dovid-moshe-crow/jewish-calendar/issues
+[codecov-img]:https://codecov.io/gh/dovid-moshe-crow/jewish-calendar/branch/main/graph/badge.svg
+[codecov-url]:https://codecov.io/gh/dovid-moshe-crow/jewish-calendar
 [semantic-release-img]:https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-release-url]:https://github.com/semantic-release/semantic-release

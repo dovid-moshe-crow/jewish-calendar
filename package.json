@@ -19,12 +19,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dovidmoishe/jewish-calendar.git"
+    "url": "git+https://github.com/dovid-moshe-crow/jewish-calendar.git"
   },
   "license": "MIT",
   "author": {
     "name": "Dovid",
-    "url": "https://github.com/dovidmoishe"
+    "url": "https://github.com/dovid-moshe-crow"
   },
   "engines": {
     "node": ">=12.0"
@@ -40,9 +40,9 @@
     "typescript"
   ],
   "bugs": {
-    "url": "https://github.com/dovidmoishe/jewish-calendar/issues"
+    "url": "https://github.com/dovid-moshe-crow/jewish-calendar/issues"
   },
-  "homepage": "https://github.com/dovidmoishe/jewish-calendar#readme",
+  "homepage": "https://github.com/dovid-moshe-crow/jewish-calendar#readme",
   "devDependencies": {
     "@ryansonshine/commitizen": "^4.2.8",
     "@ryansonshine/cz-conventional-changelog": "^3.3.4",
