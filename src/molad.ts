@@ -28,4 +28,8 @@ export class Molad {
     this.days += Math.floor(this.hours / 24);
     this.hours = this.hours % 24;
   }
+
+  weekDay() {
+    return this.days % 7;
+  }
 }
