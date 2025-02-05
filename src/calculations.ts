@@ -6,6 +6,7 @@ const JEWISH_EPOCH = 347995.5; // Julian day number for 1 Tishrei 1 AM
 const HOUR = 1080; // Parts in an hour (18 parts = 1 minute)
 const DAY = 24 * HOUR; // Parts in a day
 const MONTH = 29 * DAY + 12 * HOUR + 793; // Synodic month (29d 12h 44m 3.33s)
+const FIRST_MOLAD = 2 * DAY + HOUR * 5 + 204;
 
 /**
  * Calculates if a Hebrew year is a leap year
@@ -26,21 +27,28 @@ export function monthsInYear(year: number): number {
 }
 
 /**
+ *
+ * @param year Hebrew year
+ * @param month Month (1-13)
+ * @returns
+ */
+export function monthsElapsed(year: number, month: number) {
+  const commonMonths = (year - 1) * 12;
+  const leapMonths =
+    Math.floor((year - 1) / 19) * 7 + // Leap months in previous cycles
+    Math.floor((((year - 1) % 19) * 7) / 19); // Leap months in this cycle
+
+  return commonMonths + leapMonths;
+}
+
+/**
  * Calculates the molad (lunar conjunction) for a given year and month
  * @param year Hebrew year
  * @param month Month number (1 = Tishrei)
  * @returns Parts since the epoch
  */
 export function calculateMolad(year: number, month: number): number {
-  // Months since epoch
-  const monthsElapsed =
-    235 * Math.floor((year - 1) / 19) + // Months in complete 19 year cycles
-    12 * ((year - 1) % 19) + // Regular months in this cycle
-    Math.floor((((year - 1) % 19) * 7) / 19) + // Leap months in this cycle
-    month -
-    1; // Months in current year
-
-  return JEWISH_EPOCH + monthsElapsed * MONTH;
+  return JEWISH_EPOCH * MONTH;
 }
 
 /**
