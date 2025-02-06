@@ -8,16 +8,16 @@ export class RoshHashanah extends RoshChodesh {
   }
 
   getWeekDay() {
-    const day = this.molad.getDay();
+    let day = this.molad.getDay();
 
     if (this.molad.getHour() >= 18) {
-      this.molad.addDay();
+      day++;
     }
 
     if (day === 1 || day === 4 || day === 6) {
-      this.molad.addDay();
+      day++;
     }
 
-    return this.molad.getDay();
+    return day;
   }
 }

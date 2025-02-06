@@ -1,27 +1,27 @@
 const HOUR = 1080;
-const DAY = HOUR * 24;
-const MONTH = 29 * DAY + 12 * HOUR + 793;
+const AVG_MONTH = { days: 29, hours: 12, parts: 793 };
 
 export class Molad {
   private day: number;
   private hour: number;
   private parts: number;
 
-  constructor(day: number, hour: number, parts: number) {
-    this.day = day;
-    this.hour = hour;
-    this.parts = parts;
+  constructor(months: number) {
+    this.day = AVG_MONTH.days * months;
+    this.hour = AVG_MONTH.hours * months;
+    this.parts = AVG_MONTH.parts * months;
+
+    this.addMolad(2, 5, 204);
+    this.normalize();
   }
 
-  static firstMolad() {
-    return new Molad(2, 5, 204);
+  private addMolad(day: number, hour: number, parts: number) {
+    this.day += day;
+    this.hour += hour;
+    this.parts += parts;
   }
 
-  multiply(months: number) {
-    this.day = this.day * months;
-    this.hour = this.hour * months;
-    this.parts = this.parts * months;
-
+  private normalize() {
     this.hour += Math.floor(this.parts / HOUR);
     this.parts = this.parts % HOUR;
 
@@ -33,18 +33,6 @@ export class Molad {
     if (this.day === 0) {
       this.day = 7;
     }
-
-    return this;
-  }
-
-  addDay() {
-    this.day += 1;
-
-    if (this.day === 0) {
-      this.day = 7;
-    }
-
-    return this;
   }
 
   getDay() {

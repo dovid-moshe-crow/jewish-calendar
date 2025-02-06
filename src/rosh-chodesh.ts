@@ -3,13 +3,12 @@ import { Molad } from './molad';
 export class RoshChodesh {
   private year: number;
   private month: number;
-
   protected molad: Molad;
 
   constructor(year: number, month: number) {
     this.year = year;
     this.month = month;
-    this.molad = Molad.firstMolad().multiply(this.monthsElapsedFromCreation());
+    this.molad = new Molad(this.monthsElapsedFromCreation());
   }
 
   private monthsElapsedFromCreation() {
