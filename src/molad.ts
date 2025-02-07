@@ -11,7 +11,7 @@ export class Molad {
     this.hour = AVG_MONTH.hours * months;
     this.parts = AVG_MONTH.parts * months;
 
-    this.addMolad(2, 5, 204);
+    this.addMolad(2, 5, 204); // add molad of creation (molad tohu)
     this.normalize();
   }
 

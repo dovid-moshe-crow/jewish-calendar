@@ -4,7 +4,7 @@ import { RoshChodesh } from './rosh-chodesh';
 
 export class RoshHashanah extends RoshChodesh {
   constructor(year: number) {
-    super(year, 1);
+    super(year, 0);
   }
 
   getWeekDay() {
