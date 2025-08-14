@@ -5,6 +5,9 @@ import * as React from "react"
 import { JewishCalendar } from "@/registry/new-york/blocks/jewish-calendar/jewish-calendar"
 import { JewishDatePicker } from "@/registry/new-york/blocks/jewish-datepicker/jewish-datepicker"
 import { OpenInV0Button } from "@/components/open-in-v0-button"
+import { Input } from "@/registry/new-york/ui/input"
+import { Button } from "@/registry/new-york/ui/button"
+import { Copy, Check } from "lucide-react"
 
 export default function Home() {
   return (
@@ -20,6 +23,7 @@ export default function Home() {
           <h2 className="text-xl font-semibold">Calendar</h2>
           <OpenInV0Button name="jewish-calendar" />
         </div>
+        <CLICommand name="jewish-calendar" />
         <div className="grid gap-6">
           <ToolbarDemo />
           <JewishCalendar />
@@ -31,6 +35,7 @@ export default function Home() {
           <h2 className="text-xl font-semibold">Date Picker</h2>
           <OpenInV0Button name="jewish-datepicker" />
         </div>
+        <CLICommand name="jewish-datepicker" />
         <ExampleForm />
       </main>
     </div>
@@ -123,5 +128,29 @@ function ExampleForm() {
         </button>
       </div>
     </form>
+  )
+}
+
+function CLICommand({ name }: { name: string }) {
+  const [copied, setCopied] = React.useState(false)
+  const cmd = `npx shadcn@latest add https://jewish-calendar.vercel.app/r/${name}.json --yes`
+  return (
+    <div className="flex items-center gap-2">
+      <Input readOnly value={cmd} className="font-mono" />
+      <Button
+        type="button"
+        variant="outline"
+        size="icon"
+        onClick={() => {
+          navigator.clipboard.writeText(cmd)
+          setCopied(true)
+          setTimeout(() => setCopied(false), 1200)
+        }}
+        aria-label="Copy command"
+        title="Copy command"
+      >
+        {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
+      </Button>
+    </div>
   )
 }
