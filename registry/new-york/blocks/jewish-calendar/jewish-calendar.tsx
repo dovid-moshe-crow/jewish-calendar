@@ -15,8 +15,22 @@ import {
   CardDescription,
   CardContent,
 } from "@/registry/new-york/ui/card"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+  Languages,
+} from "lucide-react"
 
 type Language = "en" | "he"
+
+export type JewishCalendarProps = {
+  language?: Language
+  onLanguageChange?: (language: Language) => void
+  startOfWeek?: 0 | 1
+  showOutsideDays?: boolean
+}
 
 function addDays(date: Date, days: number) {
   const d = new Date(date)
@@ -24,9 +38,21 @@ function addDays(date: Date, days: number) {
   return d
 }
 
-export function JewishCalendar() {
+export function JewishCalendar({
+  language: controlledLanguage,
+  onLanguageChange,
+  startOfWeek = 0,
+  showOutsideDays = true,
+}: JewishCalendarProps) {
   const [displayDate, setDisplayDate] = React.useState(() => new Date())
-  const [language, setLanguage] = React.useState<Language>("en")
+  const [uncontrolledLanguage, setUncontrolledLanguage] = React.useState<Language>(
+    "en"
+  )
+  const language = controlledLanguage ?? uncontrolledLanguage
+  const setLanguage = (lang: Language) => {
+    setUncontrolledLanguage(lang)
+    onLanguageChange?.(lang)
+  }
 
   const firstOfMonth = React.useMemo(
     () => new Date(displayDate.getFullYear(), displayDate.getMonth(), 1),
@@ -39,14 +65,16 @@ export function JewishCalendar() {
   )
 
   const gridStart = React.useMemo(() => {
-    const day = firstOfMonth.getDay() // 0=Sun
-    return addDays(firstOfMonth, -day)
-  }, [firstOfMonth])
+    const weekday = firstOfMonth.getDay() // 0..6 (Sun..Sat)
+    const offset = (weekday - startOfWeek + 7) % 7
+    return addDays(firstOfMonth, -offset)
+  }, [firstOfMonth, startOfWeek])
 
   const gridEnd = React.useMemo(() => {
-    const day = lastOfMonth.getDay() // 0=Sun
-    return addDays(lastOfMonth, 6 - day)
-  }, [lastOfMonth])
+    const weekday = lastOfMonth.getDay() // 0..6 (Sun..Sat)
+    const offset = (6 - ((weekday - startOfWeek + 7) % 7))
+    return addDays(lastOfMonth, offset)
+  }, [lastOfMonth, startOfWeek])
 
   const days: Date[] = []
   for (let d = new Date(gridStart); d <= gridEnd; d = addDays(d, 1)) {
@@ -70,6 +98,14 @@ export function JewishCalendar() {
 
   const headerHeJewish = `${headerHe.monthName} ${headerHe.year}`
 
+  const dayNamesEn = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+  const dayNamesHe = ["א", "ב", "ג", "ד", "ה", "ו", "ש"]
+  const headers = language === "en" ? dayNamesEn : dayNamesHe
+  const rotatedHeaders = [
+    ...headers.slice(startOfWeek),
+    ...headers.slice(0, startOfWeek),
+  ]
+
   return (
     <Card className="w-full">
       <CardHeader className="flex flex-row items-center justify-between gap-4">
@@ -83,55 +119,64 @@ export function JewishCalendar() {
               : formatJewishDateInHebrew(midJewish)}
           </CardDescription>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Previous year"
+            onClick={() =>
+              setDisplayDate((d) => new Date(d.getFullYear() - 1, d.getMonth(), 1))
+            }
+          >
+            <ChevronsLeft className="size-4" />
+          </Button>
           <Button
             variant="outline"
             size="icon"
             aria-label="Previous month"
             onClick={() =>
-              setDisplayDate(
-                (d) => new Date(d.getFullYear(), d.getMonth() - 1, 1)
-              )
+              setDisplayDate((d) => new Date(d.getFullYear(), d.getMonth() - 1, 1))
             }
           >
-            ‹
+            <ChevronLeft className="size-4" />
           </Button>
           <Button
             variant="outline"
             size="icon"
             aria-label="Next month"
             onClick={() =>
-              setDisplayDate(
-                (d) => new Date(d.getFullYear(), d.getMonth() + 1, 1)
-              )
+              setDisplayDate((d) => new Date(d.getFullYear(), d.getMonth() + 1, 1))
             }
           >
-            ›
+            <ChevronRight className="size-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Next year"
+            onClick={() =>
+              setDisplayDate((d) => new Date(d.getFullYear() + 1, d.getMonth(), 1))
+            }
+          >
+            <ChevronsRight className="size-4" />
           </Button>
           <div className="w-px h-6 bg-border mx-1" />
           <Button
-            variant={language === "en" ? "secondary" : "outline"}
-            onClick={() => setLanguage("en")}
+            variant="ghost"
+            size="icon"
+            aria-label="Toggle language"
+            onClick={() => setLanguage(language === "en" ? "he" : "en")}
+            title={language === "en" ? "עברית" : "English"}
           >
-            English
-          </Button>
-          <Button
-            variant={language === "he" ? "secondary" : "outline"}
-            onClick={() => setLanguage("he")}
-          >
-            עברית
+            <Languages className="size-4" />
           </Button>
         </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-7 gap-2 text-center text-xs text-muted-foreground mb-2">
-          <div>Sun</div>
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
+          {rotatedHeaders.map((d) => (
+            <div key={d}>{d}</div>
+          ))}
         </div>
         <div className="grid grid-cols-7 gap-2">
           {days.map((date) => {
@@ -142,6 +187,10 @@ export function JewishCalendar() {
             const jewishDayEn = jewish.day
             const jewishDayHe = heb.day
             const isToday = isSameDay(date, today)
+
+            if (!isCurrentMonth && !showOutsideDays) {
+              return <div key={date.toISOString()} className="min-h-20" />
+            }
 
             return (
               <div
